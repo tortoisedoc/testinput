@@ -1,0 +1,11 @@
+[Unit]
+Description=Test Input
+After=pre-user-session.target lipstick.service booster-silica-qt5.service
+Requires=lipstick.service booster-silica-qt5.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/testinput -plugin evdevtouch:/dev/input/event0
+
+[Install]
+WantedBy=post-user-session.target
