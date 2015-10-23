@@ -14,9 +14,11 @@ TARGET = testinput
 
 CONFIG += sailfishapp
 
-QT += gui-private
 
-SOURCES += src/testinput.cpp
+QT += gui-private dbus
+
+SOURCES += src/testinput.cpp \
+    src/dbusintf.cpp
 
 
 OTHER_FILES += qml/testinput.qml \
@@ -25,15 +27,23 @@ OTHER_FILES += qml/testinput.qml \
     rpm/testinput.yaml \
     translations/*.ts \
     testinput.desktop \
-    testinput.service
+    testinput.service \
+    com.giuliettasw.testinput.service
 
 # to disable building translations every time, comment out the
 # following CONFIG line
 CONFIG += sailfishapp_i18n
 TRANSLATIONS += translations/testinput-de.ts
 
-
-systemd.path = /usr/lib/systemd/user
+systemd.path = /etc/systemd/user
 systemd.files = testinput.service
 
-INSTALLS += systemd
+dbus.path = /usr/share/dbus-1/services
+dbus.files = com.giuliettasw.testinput.service
+
+
+
+INSTALLS += systemd dbus
+
+HEADERS += \
+    src/dbusintf.h

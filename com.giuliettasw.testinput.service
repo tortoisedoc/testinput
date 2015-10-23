@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.giuliettasw.testinput
+Exec=/usr/bin/invoker --type=silica-qt5 -s /usr/bin/testinput
+User=nemo

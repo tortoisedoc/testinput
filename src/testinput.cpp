@@ -32,9 +32,15 @@
 #include <QtQuick>
 #endif
 
+#include <QDBusConnection>
+#include <QDBusError>
 #include <sailfishapp.h>
 #include <qpa/qplatformnativeinterface.h>
 #include <qpa/qplatformwindow.h>
+
+#include "dbusintf.h"
+
+extern QQuickView* mainView = NULL;
 
 int main(int argc, char *argv[])
 {
@@ -48,31 +54,40 @@ int main(int argc, char *argv[])
     // To display the view, call "show()" (will show fullscreen on device).
 
     QGuiApplication * app = SailfishApp::application(argc, argv);
-    QQuickView* tempView = SailfishApp::createView();
 
-    tempView->setObjectName("main");
+    // create the MainApplication adaptor:
+    DBusIntf * intf = new DBusIntf(app);
+    bool res = QDBusConnection::sessionBus().registerObject("/MainApplication", intf);
+    QString service("com.giuliettasw.testinput");
+    res = QDBusConnection::sessionBus().registerService(service);
 
-    QSize screenSize = tempView->screen()->size();
-    tempView->setResizeMode(QQuickView::SizeViewToRootObject);
+    qDebug() << " DBUS REGISTERATION RESULT : " << res << " LAST ERROR " << QDBusConnection::sessionBus().lastError();
+
+    mainView = SailfishApp::createView();
+
+    mainView->setObjectName("main");
+
+    mainView->setResizeMode(QQuickView::SizeViewToRootObject);
 
     QSurfaceFormat format;
-    format = tempView->format();
+    format = mainView->format();
     //qDebug() << format;
     format.setAlphaBufferSize(8);
-    tempView->setClearBeforeRendering(true);
-    tempView->setFormat(format);
-    tempView->setColor(QColor(Qt::transparent));
+    mainView->setClearBeforeRendering(true);
+    mainView->setFormat(format);
+    mainView->setColor(QColor(Qt::transparent));
 
     QString qmlPath("qml/testinput.qml");
     QUrl path (SailfishApp::pathTo(qmlPath));
-    tempView->setSource(path);
+    mainView->setSource(path);
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
-    tempView->create();    
-    QRegion inputRegion(tempView->geometry());
-    native->setWindowProperty(tempView->handle(), QLatin1String("MOUSE_REGION"), inputRegion);
-    native->setWindowProperty(tempView->handle(), QLatin1String("CATEGORY"), QString("notification"));
-    tempView->show();
+    mainView->create();
+    QRegion inputRegion(mainView->geometry());
+    //native->setWindowProperty(tempView->handle(), QLatin1String("MOUSE_REGION"), inputRegion);
+    mainView->setMask(inputRegion);
+    native->setWindowProperty(mainView->handle(), QLatin1String("CATEGORY"), QString("notification"));
+    mainView->show();
     return app->exec();
 }
 
