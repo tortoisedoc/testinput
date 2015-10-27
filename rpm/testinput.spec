@@ -13,8 +13,8 @@ Name:       testinput
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    My SailfishOS Application
-Version:    0.1
-Release:    1
+Version:    0.2
+Release:    3
 Group:      Qt/Qt
 License:    LICENSE
 URL:        http://example.org/
@@ -67,6 +67,7 @@ desktop-file-install --delete-original       \
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-/usr/lib/systemd/user/testinput.service
+/etc/systemd/user/testinput.service
+/usr/share/dbus-1/services/com.giuliettasw.testinput.service
 # >> files
 # << files

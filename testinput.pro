@@ -11,9 +11,8 @@
 
 # The name of your application
 TARGET = testinput
-
+CONFIG += console
 CONFIG += sailfishapp
-
 
 QT += gui-private dbus
 

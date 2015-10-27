@@ -2,7 +2,7 @@
 Type=Application
 X-Nemo-Application-Type=silica-qt5
 Icon=testinput
-Exec=testinput
+Exec=testinput -plugin evdevtouch:/dev/input/event0
 Name=testinput
 # translation example:
 # your app name in German locale (de)

@@ -6,7 +6,7 @@ Requires=dbus.socket
 [Service]
 Type=dbus
 BusName=com.giuliettasw.testinput
-ExecStart=/usr/bin/testinput
+ExecStart=/bin/dbus-send --session --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.StartServiceByName string:com.giuliettasw.testinput uint32:0
 
 [Install]
 WantedBy=post-user-session.target
