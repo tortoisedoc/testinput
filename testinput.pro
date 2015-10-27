@@ -41,7 +41,6 @@ dbus.path = /usr/share/dbus-1/services
 dbus.files = com.giuliettasw.testinput.service
 
 
-
 INSTALLS += systemd dbus
 
 HEADERS += \

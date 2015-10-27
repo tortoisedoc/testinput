@@ -65,9 +65,12 @@ int main(int argc, char *argv[])
 
     mainView = SailfishApp::createView();
 
+    QSize screenSize = mainView->screen()->size();
+    mainView->setGeometry(QRect(0, 0, screenSize.width(), screenSize.height()));
+
     mainView->setObjectName("main");
 
-    mainView->setResizeMode(QQuickView::SizeViewToRootObject);
+    //mainView->setResizeMode(QQuickView::SizeViewToRootObject);
 
     QSurfaceFormat format;
     format = mainView->format();
@@ -83,8 +86,9 @@ int main(int argc, char *argv[])
 
     QPlatformNativeInterface *native = QGuiApplication::platformNativeInterface();
     mainView->create();
-    QRegion inputRegion(mainView->geometry());
-    //native->setWindowProperty(tempView->handle(), QLatin1String("MOUSE_REGION"), inputRegion);
+    QRegion inputRegion(0,0,200,900);
+    //QRegion inputRegion(mainView->geometry());
+    native->setWindowProperty(mainView->handle(), QLatin1String("MOUSE_REGION"), inputRegion);
     mainView->setMask(inputRegion);
     native->setWindowProperty(mainView->handle(), QLatin1String("CATEGORY"), QString("notification"));
     mainView->show();

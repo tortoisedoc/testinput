@@ -1,4 +1,4 @@
 [D-BUS Service]
 Name=com.giuliettasw.testinput
-Exec=/usr/bin/invoker --type=silica-qt5 -s /usr/bin/testinput -plugin evdevtouch:/dev/input/event0
+Exec=/usr/bin/testinput -plugin evdevtouch:/dev/input/event0
 User=nemo

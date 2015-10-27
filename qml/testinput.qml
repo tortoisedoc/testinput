@@ -2,7 +2,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 ApplicationWindow{
-    anchors.fill:parent;
+
+//    anchors.fill:parent;
+    dimmedRegionColor: "transparent";
+    objectName:"appWindow"
+
+    cover: undefined;
+    _backgroundVisible:false;
+
     MouseArea{
         anchors.fill:parent;
         onClicked: {
@@ -12,6 +19,7 @@ ApplicationWindow{
     Rectangle{
         width:200;
         height:900;
+        color:"red";
 
 
         ListModel {
